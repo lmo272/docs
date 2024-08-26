@@ -4,7 +4,7 @@ info:
   description: External API documentation for Lynks AI.
   version: 1.0.0
 servers:
-  - url: https://lynks-ai-production.up.railway.app/api
+  - url: https://ai.getlynks.io/api
 paths:
   /tasks/optimization/name:
     post:

@@ -3,49 +3,51 @@
   "name": "Starter Kit",
   "logo": {
     "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "light": "/logo/light.svg",
+    "href": "https://getlynks.com"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#6246EA",
+    "light": "#776AF0",
+    "dark": "#4E30B5",
+    "background": {
+      "dark": "#1A0D4A"
+    },
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#6246EA",
+      "to": "#EF6461"
     }
   },
   "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
-    }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Let's Talk",
+    "url": "https://getlynks.com/metting-requst"
+    
   },
   "tabs": [
     {
       "name": "API Reference",
-      "url": "api-reference"
+      "url": "api-reference",
+      "openapi": "api-reference/openapi.yaml"
     }
   ],
   "anchors": [
     {
-      "name": "Documentation",
+      "name": "Lynks Platform",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "https://app.getlynks.com"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "name": "Support",
+      "icon": "headset",
+      "url": "mailto:support@getlynks.com"
     },
     {
-      "name": "Blog",
+      "name": "Help Center",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://help.getlynks.com"
     }
   ],
   "navigation": [
@@ -53,39 +55,37 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "quickstart",
-        "development"
+        "authentication",
+        "endpoints"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Categorization",
+      "icon": "book-open-cover",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "api-reference/categorization-task",
+        "api-reference/retrieve-categories-list"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "Optimization",
+      "icon": "book-open-cover",
       "pages": [
-        "api-reference/introduction"
+        "api-reference/optimize-product-name",
+        "api-reference/optimize-product-description"
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Attributes",
+      "icon": "socks",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/attribution-task",
+        "api-reference/retrieve-attributes-list",
+        "api-reference/retrieve-values-list"
       ]
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "linkedin": "https://www.linkedin.com/company/getlynks"
   }
 }

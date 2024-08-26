@@ -1,0 +1,124 @@
+---
+title: 'API Endpoints'
+description: 'Overview of Lynks AI External API endpoints and their functionalities'
+---
+
+# Lynks AI External API Endpoints
+
+The Lynks AI External API provides a range of endpoints to enhance and optimize product data for e-commerce platforms, specifically tailored for Manor & Galaxus. Here's an overview of the available endpoints and their functionalities.
+
+## Product Optimization
+
+### Optimize Product Name
+
+<CodeGroup>
+
+```bash
+POST /tasks/optimization/name
+```
+
+</CodeGroup>
+
+This endpoint allows you to optimize product names for better clarity and searchability. 
+
+**Key features:**
+- Improve product names based on the current name
+- Specify task type: `cleaned` or `detailed`
+- Translate to a target language
+
+### Optimize Product Description
+
+<CodeGroup>
+
+```bash
+POST /tasks/optimization/description
+```
+
+</CodeGroup>
+
+Enhance product descriptions with various customization options.
+
+**Key features:**
+- Adjust tone (professional, casual, or playful)
+- Target specific audience styles (men, women, or children)
+- Adjust description length
+- Option to use bullet points
+- SEO optimization
+- Translate to a specified language
+
+## Product Categorization
+
+### Categorization Task
+
+<CodeGroup>
+
+```bash
+POST /tasks/categorization
+```
+</CodeGroup>
+
+Automatically categorize products for specific sales channels (Galaxus or Manor).
+
+**Key features:**
+- Identify the most appropriate category based on product description
+- Specify sales channel for tailored categorization
+- Option to use RAG (Retrieval-Augmented Generation) for more precise results
+- Set a limit on the number of category suggestions
+
+## Product Attribution
+
+### Attribution Task
+
+<CodeGroup>
+
+POST /tasks/attribution
+</CodeGroup>
+
+Extract relevant attributes from a product description based on a given category.
+
+**Key features:**
+- Tailored to the requirements of different sales channels
+- Option to include recommended attributes
+- Option to include optional attributes
+- Ensures product listings have all necessary information for specific sales channels
+
+## Data Retrieval
+
+### Retrieve Categories List
+
+<CodeGroup>
+
+bash
+GET /data/categories
+
+</CodeGroup>
+
+Get a list of all categories for a specified sales channel (Galaxus or Manor).
+
+### Retrieve Attributes List
+
+<CodeGroup>
+
+GET /data/attributes
+</CodeGroup>
+
+Fetch a list of attributes associated with a specific category identifier.
+
+### Retrieve Values List
+
+<CodeGroup>
+
+GET /data/values
+</CodeGroup>
+
+Get a list of values associated with a specific category and/or attribute.
+
+## Using the API
+
+To use these endpoints, you'll need to authenticate your requests using the appropriate API keys. Refer to the [Authentication](/authentication) page for more details on how to include these keys in your requests.
+
+For detailed information on request parameters, response formats, and example usage for each endpoint, please refer to the individual API reference pages in the sidebar.
+
+<Note>
+Remember to check your subscription level to determine which endpoints and features are available to you. Some endpoints may require additional authentication or permissions.
+</Note>

@@ -1,0 +1,828 @@
+openapi: 3.1.0
+info:
+  title: Lynks AI External API
+  description: External API documentation for Lynks AI.
+  version: 1.0.0
+servers:
+  - url: https://lynks-ai-production.up.railway.app/api
+paths:
+  /tasks/optimization/name:
+    post:
+      summary: Optimize Product Name
+      description: >-
+        This endpoint is used to optimize the name of a product. It provides a
+        better name for a product based on the current name.
+      operationId: optimize_product_name_tasks_optimization_name_post
+      security:
+        - APIKey: []
+          OpenAIKey: []
+        - APIKey: []
+  
+      parameters:
+        - name: task_type
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/NameOptimizationTaskTypeEnum'
+        - name: translation_language
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/LanguageEnum'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductNameBody'
+      responses:
+        '200':
+          description: Successfully optimized the product name.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductNameOptimizationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tasks/optimization/description:
+    post:
+      summary: Optimize Product Description
+      description: >-
+        This endpoint is used to optimize the description of a product. It
+        provides a better description for a product based on the current
+        description.
+      operationId: optimize_product_description_tasks_optimization_description_post
+      security:
+        - APIKey: []
+          OpenAIKey: []
+        - APIKey: []
+      parameters:
+        - name: tone_adjustment
+          in: query
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DescriptionOptimizationToneAdjustmentEnum'
+            description: >-
+              The tone of the description to be adjusted. This is an optional
+              field.
+            title: Tone Adjustment
+          description: >-
+            The tone of the description to be adjusted. This is an optional
+            field.
+        - name: style_target_audience
+          in: query
+          required: false
+          schema:
+            allOf:
+              - $ref: >-
+                  #/components/schemas/DescriptionOptimizationStyleTargetAudienceEnum
+            description: >-
+              The style of the description to be adjusted to the target
+              audience. This is an optional field.
+            title: Style Target Audience
+          description: >-
+            The style of the description to be adjusted to the target audience.
+            This is an optional field.
+        - name: length_adjustment
+          in: query
+          required: false
+          schema:
+            type: integer
+            description: >-
+              The length of the description to be adjusted in character count.
+              This is an optional field.
+            title: Length Adjustment
+          description: >-
+            The length of the description to be adjusted in character count.
+            This is an optional field.
+        - name: use_bullet_points
+          in: query
+          required: false
+          schema:
+            type: boolean
+            description: >-
+              The use of bullet points in the description. This is an optional
+              field.
+            title: Use Bullet Points
+          description: >-
+            The use of bullet points in the description. This is an optional
+            field.
+        - name: seo_optimization
+          in: query
+          required: false
+          schema:
+            type: boolean
+            description: >-
+              The optimization of the description for SEO. This is an optional
+              field.
+            title: Seo Optimization
+          description: >-
+            The optimization of the description for SEO. This is an optional
+            field.
+        - name: translation_language
+          in: query
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/LanguageEnum'
+            description: >-
+              The language to which the description should be translated. This
+              is an optional field.
+            title: Translation Language
+          description: >-
+            The language to which the description should be translated. This is
+            an optional field.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDescriptionBody'
+      responses:
+        '200':
+          description: Successfully optimized the product description.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDescriptionOptimizationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tasks/categorization:
+    post:
+      summary: Categorization Task
+      description: >-
+        Endpoint for Categorization of Products for a Specific Sales Channel, it
+        provides categorization for products, specifically tailored to the
+        requirements of different sales channels. It identifies the most
+        appropriate category for a product, based on its description and the
+        specified sales channel.
+      operationId: categorization_task_tasks_categorization_post
+      security:
+        - APIKey: []
+          OpenAIKey: []
+        - APIKey: []
+      parameters:
+        - name: sales_channel
+          in: query
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/SalesChannelEnum'
+            description: >-
+              The name of the sales channel for which the categorization is
+              being performed. This is a required field.
+            title: Sales Channel
+          description: >-
+            The name of the sales channel for which the categorization is being
+            performed. This is a required field.
+        - name: use_rag
+          in: query
+          required: false
+          schema:
+            type: boolean
+            description: >-
+              A boolean value indicating whether the categorization should be
+              performed precisely or not. This is an optional field with a
+              default value of True.
+            default: true
+            title: Use Rag
+          description: >-
+            A boolean value indicating whether the categorization should be
+            performed precisely or not. This is an optional field with a default
+            value of True.
+        - name: results_limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            description: >-
+              The maximum number of category suggestions to return. It's an
+              optional field with a default value of 10.
+            default: 10
+            title: Results Limit
+          description: >-
+            The maximum number of category suggestions to return. It's an
+            optional field with a default value of 10.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDescriptionBody'
+      responses:
+        '200':
+          description: Product with predicted category.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorizationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tasks/attribution:
+    post:
+      summary: Attribution Task
+      description: >-
+        Endpoint for Attribution of Products for a Specific Sales Channel, it
+        provides attribution for products, specifically tailored to the
+        requirements of different sales channels. It extracts the desired
+        attributes for a product, based on its description and the specified
+        sales channel.
+      operationId: attribution_task_tasks_attribution_post
+      security:
+        - APIKey: []
+          OpenAIKey: []
+        - APIKey: []
+      parameters:
+        - name: category_identifier
+          in: query
+          required: true
+          schema:
+            type: string
+            description: The category assigned to the item
+            title: Category Identifier
+          description: The category assigned to the item
+        - name: add_recommended
+          in: query
+          required: false
+          schema:
+            type: boolean
+            description: Flag indicating if to add recommended attributes to the process
+            default: false
+            title: Add Recommended
+          description: Flag indicating if to add recommended attributes to the process
+        - name: add_optional
+          in: query
+          required: false
+          schema:
+            type: boolean
+            description: Flag indicating if to add optional attributes to the process
+            default: false
+            title: Add Optional
+          description: Flag indicating if to add optional attributes to the process
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDescriptionBody'
+      responses:
+        '200':
+          description: Product with extracted attributes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributionResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /data/categories:
+    get:
+      summary: Retrieve Categories List
+      description: Retrieve a list of all categories on the provided sales channel.
+      operationId: retrieve_categories_list_data_categories_get
+      security:
+        - APIKey: []
+          OpenAIKey: []
+        - APIKey: []
+      parameters:
+        - name: sales_channel
+          in: query
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/SalesChannelEnum'
+            description: >-
+              The name of the sales channel whose categories you want to
+              retrieve. This is a required field.
+            title: Sales Channel
+          description: >-
+            The name of the sales channel whose categories you want to retrieve.
+            This is a required field.
+      responses:
+        '200':
+          description: List of Categories for selected sales channel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /data/attributes:
+    get:
+      summary: Retrieve Attributes List
+      description: >-
+        Retrieve a list of all attributes associated with the provided category
+        identifier
+
+        and return them categorized by requirement level.
+      operationId: retrieve_attributes_list_data_attributes_get
+      security:
+        - APIKey: []
+          OpenAIKey: []
+        - APIKey: []
+      parameters:
+        - name: category_identifier
+          in: query
+          required: true
+          schema:
+            type: string
+            description: The identifier of the category whose attributes you want to find.
+            title: Category Identifier
+          description: The identifier of the category whose attributes you want to find.
+      responses:
+        '200':
+          description: List of Attributes for the selected category.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributeResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /data/values:
+    get:
+      summary: Retrieve Values List
+      description: >-
+        Retrieve a list of all values associated with the provided category
+        identifier and optionally filter by attribute identifier.
+      operationId: retrieve_values_list_data_values_get
+      security:
+        - APIKey: []
+          OpenAIKey: []
+        - APIKey: []
+      parameters:
+        - name: category_identifier
+          in: query
+          required: false
+          schema:
+            type: string
+            description: The identifier of the category whose values you want to find.
+            title: Category Identifier
+          description: The identifier of the category whose values you want to find.
+        - name: attribute_identifier
+          in: query
+          required: false
+          schema:
+            type: string
+            description: >-
+              The identifier of the attribute whose values you want to find. You
+              need to provide category_identifier as well.
+            title: Attribute Identifier
+          description: >-
+            The identifier of the attribute whose values you want to find. You
+            need to provide category_identifier as well.
+      responses:
+        '200':
+          description: List of Values for the selected category and attribute.
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    Attribute:
+      properties:
+        identifier:
+          type: string
+          title: Identifier
+        requirement_level:
+          type: string
+          title: Requirement Level
+        languages:
+          $ref: '#/components/schemas/Languages'
+      type: object
+      required:
+        - identifier
+        - requirement_level
+        - languages
+      title: Attribute
+    AttributeResponse:
+      properties:
+        total_attribute_count:
+          type: integer
+          title: Total Attribute Count
+        required_attributes:
+          $ref: '#/components/schemas/AttributeSection'
+        recommended_attributes:
+          $ref: '#/components/schemas/AttributeSection'
+        optional_attributes:
+          $ref: '#/components/schemas/AttributeSection'
+        category:
+          $ref: '#/components/schemas/Category'
+      type: object
+      required:
+        - total_attribute_count
+        - required_attributes
+        - recommended_attributes
+        - optional_attributes
+        - category
+      title: AttributeResponse
+    AttributeSection:
+      properties:
+        attribute_count:
+          type: integer
+          title: Attribute Count
+        attributes:
+          items:
+            $ref: '#/components/schemas/Attribute'
+          type: array
+          title: Attributes
+      type: object
+      required:
+        - attribute_count
+        - attributes
+      title: AttributeSection
+    AttributeWithValues:
+      properties:
+        identifier:
+          type: string
+          title: Identifier
+        requirement_level:
+          type: string
+          title: Requirement Level
+        languages:
+          $ref: '#/components/schemas/Languages'
+        value_count:
+          type: integer
+          title: Value Count
+        values:
+          items:
+            $ref: '#/components/schemas/Value'
+          type: array
+          title: Values
+      type: object
+      required:
+        - identifier
+        - requirement_level
+        - languages
+        - value_count
+        - values
+      title: AttributeWithValues
+    AttributionResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        category_identifier:
+          type: string
+          title: Category Identifier
+        product_description:
+          type: string
+          title: Product Description
+        context_language:
+          type: string
+          title: Context Language
+        extraction:
+          items:
+            $ref: '#/components/schemas/ExtractedAttributeValue'
+          type: array
+          title: Extraction
+        attribute_count:
+          type: integer
+          title: Attribute Count
+        attributes:
+          items:
+            $ref: '#/components/schemas/AttributeWithValues'
+          type: array
+          title: Attributes
+      type: object
+      required:
+        - message
+        - category_identifier
+        - product_description
+        - context_language
+        - extraction
+        - attribute_count
+        - attributes
+      title: AttributionResponse
+    CategorizationResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        product_description:
+          type: string
+          title: Product Description
+        sales_channel:
+          $ref: '#/components/schemas/SalesChannelEnum'
+        context_language:
+          $ref: '#/components/schemas/LanguageEnum'
+        best_prediction:
+          $ref: '#/components/schemas/PredictedCategory'
+        predicted_categories:
+          items:
+            $ref: '#/components/schemas/PredictedCategory'
+          type: array
+          title: Predicted Categories
+      type: object
+      required:
+        - message
+        - product_description
+        - sales_channel
+        - context_language
+        - best_prediction
+        - predicted_categories
+      title: CategorizationResponse
+    Category:
+      properties:
+        identifier:
+          type: string
+          title: Identifier
+        languages:
+          $ref: '#/components/schemas/Languages'
+      type: object
+      required:
+        - identifier
+        - languages
+      title: Category
+    CategoryResponse:
+      properties:
+        category_count:
+          type: integer
+          title: Category Count
+        categories:
+          items:
+            $ref: '#/components/schemas/Category'
+          type: array
+          title: Categories
+      type: object
+      required:
+        - category_count
+        - categories
+      title: CategoryResponse
+    ConfidenceScore:
+      type: string
+      enum:
+        - LOW
+        - MEDIUM
+        - HIGH
+      title: ConfidenceScore
+    DescriptionOptimizationStyleTargetAudienceEnum:
+      type: string
+      enum:
+        - men
+        - women
+        - children
+      title: DescriptionOptimizationStyleTargetAudienceEnum
+    DescriptionOptimizationToneAdjustmentEnum:
+      type: string
+      enum:
+        - professional
+        - casual
+        - playful
+      title: DescriptionOptimizationToneAdjustmentEnum
+    ExtractedAttributeValue:
+      properties:
+        attribute_identifier:
+          type: string
+          title: Attribute Identifier
+        requirement_level:
+          type: string
+          title: Requirement Level
+        value_identifier:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Value Identifier
+        value_raw:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Value Raw
+        value_unit:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Value Unit
+        value_source:
+          $ref: '#/components/schemas/ValueSource'
+        reasoning:
+          type: string
+          title: Reasoning
+        confidence:
+          $ref: '#/components/schemas/ConfidenceScore'
+      type: object
+      required:
+        - attribute_identifier
+        - requirement_level
+        - value_identifier
+        - value_raw
+        - value_unit
+        - value_source
+        - reasoning
+        - confidence
+      title: ExtractedAttributeValue
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    LanguageDetails:
+      properties:
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+        - name
+      title: LanguageDetails
+    LanguageEnum:
+      type: string
+      enum:
+        - en
+        - de
+        - fr
+        - it
+      title: LanguageEnum
+    Languages:
+      properties:
+        en:
+          anyOf:
+            - $ref: '#/components/schemas/LanguageDetails'
+            - type: 'null'
+        de:
+          anyOf:
+            - $ref: '#/components/schemas/LanguageDetails'
+            - type: 'null'
+        fr:
+          anyOf:
+            - $ref: '#/components/schemas/LanguageDetails'
+            - type: 'null'
+        it:
+          anyOf:
+            - $ref: '#/components/schemas/LanguageDetails'
+            - type: 'null'
+      type: object
+      title: Languages
+    NameOptimizationTaskTypeEnum:
+      type: string
+      enum:
+        - cleaned
+        - detailed
+      title: NameOptimizationTaskTypeEnum
+    PredictedCategory:
+      properties:
+        identifier:
+          type: string
+          title: Identifier
+        languages:
+          additionalProperties:
+            type: string
+          type: object
+          title: Languages
+      type: object
+      required:
+        - identifier
+        - languages
+      title: PredictedCategory
+    ProductDescriptionBody:
+      properties:
+        product_description:
+          type: string
+          title: Product Description
+          description: >-
+            A textual description of the item being categorized. This
+            description is utilized to extract the available attributes.
+      type: object
+      required:
+        - product_description
+      title: ProductDescriptionBody
+    ProductDescriptionOptimizationResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        old_description:
+          type: string
+          title: Old Description
+        new_description:
+          type: string
+          title: New Description
+      type: object
+      required:
+        - message
+        - old_description
+        - new_description
+      title: ProductDescriptionOptimizationResponse
+    ProductNameBody:
+      properties:
+        product_name:
+          type: string
+          title: Product Name
+          description: The name of the product to optimize.
+      type: object
+      required:
+        - product_name
+      title: ProductNameBody
+    ProductNameOptimizationResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        old_name:
+          type: string
+          title: Old Name
+        best_name:
+          type: string
+          title: Best Name
+        other_names:
+          items:
+            type: string
+          type: array
+          title: Other Names
+      type: object
+      required:
+        - message
+        - old_name
+        - best_name
+        - other_names
+      title: ProductNameOptimizationResponse
+    SalesChannelEnum:
+      type: string
+      enum:
+        - galaxus
+        - manor
+      title: SalesChannelEnum
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+    Value:
+      properties:
+        identifier:
+          type: string
+          title: Identifier
+        languages:
+          $ref: '#/components/schemas/Languages'
+      type: object
+      required:
+        - identifier
+        - languages
+      title: Value
+    ValueSource:
+      type: string
+      enum:
+        - PROVIDED_VALUES
+        - PROVIDED_CONTEXT
+        - AI_PREDICTED
+        - NOT_FOUND
+      title: ValueSource
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+    OpenAIKey:
+      type: apiKey
+      in: header
+      name: X-OpenAI-Key
+

@@ -1,0 +1,76 @@
+---
+title: 'Authentication'
+description: 'Learn how to authenticate your requests to the Lynks AI External API'
+---
+
+# Authentication
+
+To use the Lynks AI External API, you need to authenticate your requests. The authentication method depends on your subscription level.
+
+## API Keys
+
+There are two types of API keys you may need to use:
+
+1. **Lynks API Key**: Required for all users
+2. **OpenAI API Key**: Required for certain subscription levels
+
+### Lynks API Key
+
+All users must include the Lynks API Key in their requests. This key is provided when you sign up for the Lynks AI service.
+
+To use the Lynks API Key, include it in the `X-Api-Key` header of your HTTP requests:
+
+
+```http
+X-Api-Key: your_lynks_api_key_here
+```
+
+### OpenAI API Key
+
+Depending on your subscription level, you may also need to provide an OpenAI API Key. This key is used for advanced AI-powered features.
+
+If required, include the OpenAI API Key in the `X-OpenAI-Key` header of your HTTP requests:
+
+
+```http
+X-OpenAI-Key: your_openai_api_key_here
+```
+
+
+<Note>
+  If you're unsure whether you need to provide an OpenAI API Key, please check your subscription details or contact our support team.
+</Note>
+
+## Obtaining an OpenAI API Key
+
+If your subscription requires an OpenAI API Key, follow these steps to obtain one:
+
+1. Go to the [OpenAI website](https://openai.com/) and sign up for an account if you haven't already.
+2. Once logged in, navigate to the API section of your account.
+3. Create a new API key. Make sure to save this key securely, as it won't be shown again.
+4. Use this key in your requests to the Lynks AI External API as described above.
+
+<Warning>
+  Keep your API keys confidential. Do not share them publicly or include them in client-side code. Always use server-side requests to protect your keys.
+</Warning>
+
+## Example Request
+
+Here's an example of how to include both API keys in a curl request:
+
+
+```bash
+curl -X POST 'https://lynks-ai-production.up.railway.app/api/tasks/optimization/name' \
+-H 'X-Api-Key: your_lynks_api_key_here' \
+-H 'X-OpenAI-Key: your_openai_api_key_here' \
+-H 'Content-Type: application/json' \
+-d '{"product_name": "Example Product"}'
+```
+
+
+Replace `your_lynks_api_key_here` and `your_openai_api_key_here` with your actual API keys.
+
+## Next Steps
+
+Now that you understand how to authenticate your requests, you're ready to start using the Lynks AI External API. Check out our [API Reference](/api-reference/introduction) to learn about the available endpoints and how to use them.
+

@@ -399,7 +399,24 @@ paths:
           description: List of Values for the selected category and attribute.
           content:
             application/json:
-              schema: {}
+              schema:
+                type: object
+                properties:
+                  total_value_count:
+                    type: integer
+                  values:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Value'
+                  attribute:
+                    $ref: '#/components/schemas/Attribute'
+                  category:
+                    $ref: '#/components/schemas/Category'
+                required:
+                  - total_value_count
+                  - values
+                  - attribute
+                  - category
         '422':
           description: Validation Error
           content:
